@@ -23,12 +23,12 @@ return new class extends Migration
             $table->time('due_time')->nullable();
             $table->decimal('estimated_hours', 5, 2)->nullable();
             $table->decimal('actual_hours', 5, 2)->nullable();
-            $table->string('recurring_rule')->nullable(); // e.g., "weekly"
+            $table->string('recurring_rule')->nullable();
             $table->foreignId('created_by')->constrained('users');
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->softDeletes();
-            $table->timestamps();
+            $table->timestamps();;
         });
     }
 

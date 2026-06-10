@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('ip_address', 45);
-            $table->text('user_agent');
-            $table->string('device')->nullable();
-            $table->boolean('successful');
-            $table->timestamp('login_at');
+            $table->morphs('loggable');
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->string('event'); // created, updated, deleted, status_changed, etc.
+            $table->json('old_values')->nullable();
+            $table->json('new_values')->nullable();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->timestamps();
         });
     }
 

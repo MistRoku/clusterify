@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_assignees', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('assigned_by')->constrained('users');
-            $table->timestamp('assigned_at')->useCurrent();
-            $table->timestamp('notified_at')->nullable();
-            $table->timestamps(); // optional, but pivot may need timestamps
+            $table->foreignId('user_id')->constrained();
+            $table->string('filename');
+            $table->string('original_name');
+            $table->string('mime_type');
+            $table->integer('size');
+            $table->string('disk')->default('public');
+            $table->string('path');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_assignees');
+        Schema::dropIfExists('attachments');
     }
 };

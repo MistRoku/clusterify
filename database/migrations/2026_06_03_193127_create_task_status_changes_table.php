@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('task_status_changes', function (Blueprint $table) {
             $table->id();
-            $table->morphs('loggable');
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->string('event'); // created, updated, deleted, status_changed
-            $table->json('old_values')->nullable();
-            $table->json('new_values')->nullable();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
+            $table->foreignId('task_id')->constrained()->cascadeOnDelete();
+            $table->enum('from_status', ['todo', 'in_progress', 'in_review', 'blocked', 'done'])->nullable();
+            $table->enum('to_status', ['todo', 'in_progress', 'in_review', 'blocked', 'done']);
+            $table->foreignId('changed_by')->nullable()->constrained('users');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
