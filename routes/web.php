@@ -43,5 +43,3 @@ Route::middleware(['auth:sanctum', 'is_super_admin'])->prefix('admin')->group(fu
 Route::post('/switch-company', [CompanySwitchController::class, 'switch'])->name('switch-company')->middleware('auth');
 Route::post('/reset-company', [CompanySwitchController::class, 'reset'])->name('reset-company')->middleware('auth');
 
-// Jetstream authentication routes (already included via require)
-require __DIR__.'/jetstream.php';
